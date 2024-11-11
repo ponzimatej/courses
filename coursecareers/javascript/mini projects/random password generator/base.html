@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Password Generator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="center">
+      <h2>Random password generator</h2>
+      <label for="passwordLength">Password Length</label>
+      <input
+        id="passwordLength"
+        name="passwordLength"
+        type="number"
+        value="8"
+      />
+      <br />
+      <form>
+        <input
+          type="checkbox"
+          name="options"
+          value="true"
+          id="lowercase"
+          checked
+        />
+        <label for="lowercase">Lowercase Characters</label>
+        <br />
+        <input type="checkbox" name="options" value="true" id="uppercase" />
+        <label for="uppercase">Uppercase Characters</label>
+        <br />
+        <input type="checkbox" name="options" value="true" id="numbers" />
+        <label for="numbers">Numbers</label>
+        <br />
+        <input type="checkbox" name="options" value="true" id="special" />
+        <label for="special">Special Characters</label>
+        <br />
+        <br />
+        <div class="center">
+          <button type="button" id="submitButton">submit</button>
+        </div>
+      </form>
+    </div>
+    <br />
+    <strong id="password" class="center"></strong>
+    <script type="module" src="arrays.js"></script>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

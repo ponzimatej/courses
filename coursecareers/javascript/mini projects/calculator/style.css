@@ -1,0 +1,80 @@
+.calc {
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    width: 50vh;
+    border: 1px black solid;
+    border-radius: 10px;
+}
+
+.result {
+    height: 12%;
+    display: flex;
+    margin: 15px 15px 10px 15px;
+    background-color: gainsboro;
+    border: 1px black solid;
+    border-radius: 10px;
+}
+
+.result:hover {
+    cursor: text;
+}
+
+.result-line {
+    flex: 1;
+    display: flex;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    justify-content: left;
+    align-items: flex-end;
+    font-size: x-large;
+}
+
+.buttons {
+    flex: 5;
+    margin: 5px 10px 10px 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.button {
+    flex: 1;
+    background-color: gainsboro;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px black solid;
+    border-radius: 10px;
+    font-size: large;
+}
+
+.button:hover {
+    background-color: gray;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.button2 {
+    height: 74%;
+    background-color: gainsboro;
+    margin: 10px 10px 10px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px black solid;
+    border-radius: 10px;
+    
+}
+
+.button2:hover {
+    background-color: gray;
+    transition: 0.2s;
+    cursor: pointer;
+}
