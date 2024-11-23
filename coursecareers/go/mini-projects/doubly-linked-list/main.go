@@ -21,8 +21,8 @@ func (ll *LinkedList[T]) index(idx uint) (T, bool) {
 	}
 
 	current := ll.head
-	for i := 0; i < int(ll.length); i++ {
-		if uint(i) == idx {
+	for i := uint(0); i < ll.length; i++ {
+		if i == idx {
 			return current.value, true
 		}
 		current = current.next
@@ -37,15 +37,8 @@ func (ll *LinkedList[T]) append(value T) {
 
 	if ll.head == nil {
 		ll.head = node
-		ll.length += 1
-		return
-	}
-
-	if ll.length == 1 {
-		node.prev = ll.head
-		node.next = ll.head
-		ll.head.next = node
-		ll.head.prev = node
+		node.next = node
+		node.prev = node
 	} else {
 		node.prev = ll.head.prev
 		node.next = ll.head
@@ -53,15 +46,27 @@ func (ll *LinkedList[T]) append(value T) {
 		ll.head.prev = node
 	}
 
-	ll.length += 1
+	ll.length++
 }
 
 func (ll *LinkedList[T]) pop() T {
+	if ll.head == nil {
+		var defaultVal T
+		return defaultVal
+	}
+
+	if ll.head.next == ll.head {
+		poppedNode := ll.head
+		ll.head = nil
+		ll.length = 0
+		return poppedNode.value
+	}
+
 	poppedNode := ll.head.prev
 	newNode := poppedNode.prev
 	newNode.next = ll.head
 	ll.head.prev = newNode
-	ll.length -= 1
+	ll.length--
 
 	return poppedNode.value
 }
@@ -76,14 +81,16 @@ func (ll *LinkedList[T]) printList() {
 }
 
 func main() {
-	ll := &LinkedList[int]{head: nil, length: 0}
-	ll.append(3)
-	ll.append(4)
-	ll.append(5)
-	ll.append(7)
-	ll.pop()
-	ll.append(15)
+	ll := LinkedList[int]{}
 	ll.printList()
-	val, yes := ll.index(2)
-	fmt.Println(val, yes)
+	ll.pop()
+	ll.append(10)
+	ll.append(15)
+	ll.pop()
+	ll.pop()
+	ll.append(4)
+	ll.append(9)
+
+	ll.printList()
+	fmt.Println(ll.index(1))
 }
