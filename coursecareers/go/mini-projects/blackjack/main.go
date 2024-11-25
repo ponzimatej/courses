@@ -50,6 +50,13 @@ type Deck struct {
 }
 
 func (deck *Deck) draw(num uint) []Card {
+
+	if len(deck.cards) == 0 {
+		fmt.Printf("Current deck is empty, creating a new deck\n")
+		deck.create()
+		deck.shuffle()
+	}
+
 	toReturn := []Card{}
 	for i := uint(0); i < num; i++ {
 		lastCard := deck.cards[len(deck.cards)-1] // get the last card in the deck
@@ -82,22 +89,76 @@ type Game struct {
 	status      string
 }
 
+func (game *Game) play(bet float64) float64 {
+	game.status = ""
+	game.playerSum = 0
+	game.dealerSum = 0
+	game.playerCards = []Card{}
+	game.dealerCards = []Card{}
+	fmt.Printf("\n----------------\n\n")
+
+	game.dealStartingCards()        // deal starting cards
+	game.updateSumsAndCheckStatus() // update the sums of players cards and check if game is over
+	if game.status == "w" {
+		return bet
+	}
+
+	if game.status == "l" {
+		return -bet
+	}
+
+	if game.status == "t" {
+		return 0
+	}
+
+	game.playerTurn()
+	if game.status == "w" {
+		return bet
+	}
+
+	if game.status == "l" {
+		return -bet
+	}
+
+	if game.status == "t" {
+		return 0
+	}
+
+	game.dealerTurn()
+	if game.status == "w" {
+		return bet
+	}
+
+	if game.status == "l" {
+		return -bet
+	}
+
+	game.compare()
+	if game.status == "w" {
+		return bet
+	}
+
+	if game.status == "l" {
+		return -bet
+	}
+
+	fmt.Println("Tie!")
+	fmt.Println()
+	return 0
+}
+
 func (game *Game) dealStartingCards() {
 
 	game.playerCards = append(game.playerCards, game.deck.draw(2)...)
 	game.dealerCards = append(game.dealerCards, game.deck.draw(2)...)
 
-	game.showCards(true, false) // shows my cards
-
-	game.updateStatus() // update the sums of players cards, if player's sum is 21, return "W" and later end the game
-
-	fmt.Printf("Dealer's cards are: %v\n", game.dealerCards[0].getString()) // shows dealer's face up card
-	fmt.Println()
+	game.showCards(true, false)                                               // shows my cards
+	fmt.Printf("Dealer's cards are: %v\n\n", game.dealerCards[0].getString()) // shows dealer's face up card
 
 }
 
-func (game *Game) showCards(me bool, dealer bool) {
-	if me == true {
+func (game *Game) showCards(player bool, dealer bool) {
+	if player {
 		fmt.Printf("Your cards are: ")
 		for _, card := range game.playerCards {
 			cardString := card.getString()
@@ -105,7 +166,8 @@ func (game *Game) showCards(me bool, dealer bool) {
 		}
 		fmt.Printf("\n")
 	}
-	if dealer == true {
+
+	if dealer {
 		fmt.Printf("Dealer's cards are: ")
 		for _, card := range game.dealerCards {
 			cardString := card.getString()
@@ -115,7 +177,30 @@ func (game *Game) showCards(me bool, dealer bool) {
 	}
 }
 
-func (game *Game) isAcePlayer() {
+func (game *Game) updateSumsAndCheckStatus() {
+	game.updatePlayerSum()
+	game.updateDealerSum()
+	game.checkStatus()
+}
+
+func (game *Game) updatePlayerSum() {
+	game.playerSum = 0
+
+	for _, card := range game.playerCards {
+		switch card.value {
+		case 11, 12, 13:
+			game.playerSum += 10
+		case 1:
+			defer game.AddAceToPlayerSum()
+			continue
+		default:
+			game.playerSum += card.value
+		}
+	}
+
+}
+
+func (game *Game) AddAceToPlayerSum() {
 	if game.playerSum < 11 {
 		game.playerSum += 11
 	} else {
@@ -123,7 +208,24 @@ func (game *Game) isAcePlayer() {
 	}
 }
 
-func (game *Game) isAceDealer() {
+func (game *Game) updateDealerSum() {
+	game.dealerSum = 0
+
+	for _, card := range game.dealerCards {
+		switch card.value {
+		case 11, 12, 13:
+			game.dealerSum += 10
+		case 1:
+			defer game.AddAceToDealerSum()
+			continue
+		default:
+			game.dealerSum += card.value
+		}
+	}
+
+}
+
+func (game *Game) AddAceToDealerSum() {
 	if game.dealerSum < 11 {
 		game.dealerSum += 11
 	} else {
@@ -131,147 +233,44 @@ func (game *Game) isAceDealer() {
 	}
 }
 
-func (game *Game) updatePlayerSum() {
-	game.playerSum = 0
-	for _, card := range game.playerCards {
-		switch card.value {
-		case 11, 12, 13:
-			game.playerSum += 10
-		case 1:
-			defer game.isAcePlayer()
-			continue
-		default:
-			game.playerSum += card.value
-		}
-	}
-}
-
-func (game *Game) updateDealerSum() {
-	game.dealerSum = 0
-	for _, card := range game.dealerCards {
-		switch card.value {
-		case 11, 12, 13:
-			game.dealerSum += 10
-		case 1:
-			defer game.isAceDealer()
-			continue
-		default:
-			game.dealerSum += card.value
-		}
-	}
-}
-
-func (game *Game) updateStatus() {
-	game.updatePlayerSum()
-	game.updateDealerSum()
-	if game.playerSum == 21 {
-		game.status = "w"
-	}
+func (game *Game) checkStatus() {
 	if game.playerSum > 21 {
-		fmt.Println("BUST")
 		game.status = "l"
+		fmt.Println("Bust! You lost.")
+		game.showCards(false, true)
+		fmt.Println()
+	}
+	if game.playerSum == 21 && game.dealerSum != 21 {
+		game.status = "w"
+		fmt.Println("Blackjack! You won.")
+		game.showCards(false, true)
+		fmt.Println()
+	}
+	if game.playerSum == 21 && game.dealerSum == 21 {
+		game.status = "t"
+		fmt.Println("Both player and Dealer hit a blackjack. Tie!")
+		game.showCards(false, true)
+		fmt.Println()
 	}
 	if game.dealerSum > 21 {
-		fmt.Println("DEALER BUST")
 		game.status = "w"
-	}
-}
-
-func (game *Game) play(bet float64) float64 {
-	game.status = ""
-	game.playerSum = 0
-	game.dealerSum = 0
-	fmt.Println()
-	fmt.Println("----------------")
-	fmt.Println()
-
-	game.deck = Deck{}          // create game deck
-	game.playerCards = []Card{} // create a slice of player's cards
-	game.dealerCards = []Card{} // create a slice of dealer's cards
-
-	game.deck.create()  // create 52 cards in the deck
-	game.deck.shuffle() // shuffle cards in deck
-
-	game.dealStartingCards() // deal starting cards
-	if game.status == "w" {
-		fmt.Println("You won!")
+		fmt.Println("Dealer bust! You won.")
 		fmt.Println()
-		return bet
-	}
-	if game.status == "l" {
-		fmt.Println("You lost!")
-		fmt.Println()
-		return -bet
-	}
-
-	game.playerTurn()
-	if game.status == "w" {
-		fmt.Println("You won!")
-		fmt.Println()
-		return bet
-	}
-	if game.status == "l" {
-		fmt.Println("You lost!")
-		fmt.Println()
-		return -bet
-	}
-
-	game.dealerTurn()
-	if game.status == "w" {
-		fmt.Println("You won!")
-		fmt.Println()
-		return bet
-	}
-	if game.status == "l" {
-		fmt.Println("You lost!")
-		fmt.Println()
-		return -bet
-	}
-
-	game.compare()
-	if game.status == "w" {
-		fmt.Println("You won!")
-		fmt.Println()
-		return bet
-	}
-	if game.status == "l" {
-		fmt.Println("You lost!")
-		fmt.Println()
-		return -bet
-	}
-
-	fmt.Println("Tie!")
-	return 0
-}
-
-func (game *Game) compare() {
-	fmt.Println()
-	fmt.Println("----------------")
-	fmt.Println()
-	fmt.Println("Comparing cards.")
-	game.showCards(true, true)
-	if game.playerSum > game.dealerSum {
-		game.status = "w"
-	} else if game.playerSum <= game.dealerSum {
-		game.status = "l"
 	}
 }
 
 func (game *Game) playerTurn() {
-	fmt.Println("----------------")
-	fmt.Println()
-	fmt.Println("Your turn, would you like to Hit or Stand? (H/S) ")
 	i := true
 	for i == true {
-		response := enterString()
+		fmt.Printf("Your turn, would you like to Hit or Stand? (H/S) ")
+		response := strings.ToLower(enterString())
 		switch response {
-		case "H", "Hit", "h", "hit":
-			i = game.hit()
-			if i == false {
+		case "h", "hit":
+			game.hitPlayer()
+			if game.status == "l" || game.status == "w" {
 				return
 			}
-			fmt.Println("Your turn, would you like to Hit or Stand? (H/S) ")
-		case "S", "Stand", "s", "stand":
+		case "s", "stand":
 			return
 		default:
 			fmt.Println("Enter one of these options: (H/S)")
@@ -279,46 +278,40 @@ func (game *Game) playerTurn() {
 	}
 }
 
-func (game *Game) hit() bool {
+func (game *Game) hitPlayer() {
+
 	game.playerCards = append(game.playerCards, game.deck.draw(1)...)
 	game.showCards(true, false)
+	game.updateSumsAndCheckStatus()
 
-	game.updateStatus()
-	if game.status == "l" {
-		return false
-	}
-
-	return true
 }
 
-func (game *Game) dealerHit() bool {
+func (game *Game) hitDealer() {
+
 	game.dealerCards = append(game.dealerCards, game.deck.draw(1)...)
 	game.showCards(false, true)
-
-	game.updateStatus()
-	if game.status == "w" {
-		return false
-	}
-	return true
+	game.updateSumsAndCheckStatus()
 }
 
 func (game *Game) dealerTurn() {
-	fmt.Println()
-	fmt.Println("----------------")
-	fmt.Println()
-	fmt.Println("Dealer's turn.")
+	fmt.Printf("\n----------------\n\nDealer's turn.\n")
 	game.showCards(false, true)
 
-	for true {
-		if game.dealerSum < 17 {
-			fmt.Println("Dealer hits")
-			i := game.dealerHit()
-			if i == false {
-				return
-			}
-		} else {
-			return
-		}
+	for game.dealerSum < 17 {
+		fmt.Println("Dealer hits")
+		game.hitDealer()
+	}
+}
+
+func (game *Game) compare() {
+	fmt.Printf("\n----------------\n\nComparing cards.\n")
+	game.showCards(true, true)
+	if game.playerSum > game.dealerSum {
+		game.status = "w"
+		fmt.Println("You are closer to 21. You won!")
+	} else if game.playerSum < game.dealerSum {
+		game.status = "l"
+		fmt.Println("Dealer is closer to 21. You lost!")
 	}
 }
 
@@ -339,6 +332,11 @@ func enterString() string {
 func main() {
 	balance := float64(100)
 
+	game := Game{}
+	game.deck = Deck{}
+	game.deck.create()  // create 52 cards in the deck
+	game.deck.shuffle() // shuffle cards in deck
+
 	for balance > 0 {
 		fmt.Printf("Your balance is: $%.2f\n", balance)
 		fmt.Printf("Enter your bet (q to quit): ")
@@ -352,7 +350,6 @@ func main() {
 			continue
 		}
 
-		game := Game{}
 		balance += game.play(bet)
 	}
 
