@@ -99,47 +99,23 @@ func (game *Game) play(bet float64) float64 {
 
 	game.dealStartingCards()        // deal starting cards
 	game.updateSumsAndCheckStatus() // update the sums of players cards and check if game is over
-	if game.status == "w" {
-		return bet
-	}
-
-	if game.status == "l" {
-		return -bet
-	}
-
-	if game.status == "t" {
-		return 0
+	if game.checkIfGameOver(bet) != 1 {
+		return game.checkIfGameOver(bet)
 	}
 
 	game.playerTurn()
-	if game.status == "w" {
-		return bet
-	}
-
-	if game.status == "l" {
-		return -bet
-	}
-
-	if game.status == "t" {
-		return 0
+	if game.checkIfGameOver(bet) != 1 {
+		return game.checkIfGameOver(bet)
 	}
 
 	game.dealerTurn()
-	if game.status == "w" {
-		return bet
-	}
-
-	if game.status == "l" {
-		return -bet
+	if game.checkIfGameOver(bet) != 1 {
+		return game.checkIfGameOver(bet)
 	}
 
 	game.compare()
-	if game.status == "w" {
-		return bet
-	}
-
-	if game.status == "l" {
-		return -bet
+	if game.checkIfGameOver(bet) != 1 {
+		return game.checkIfGameOver(bet)
 	}
 
 	fmt.Println("Tie!")
@@ -257,6 +233,22 @@ func (game *Game) checkStatus() {
 		fmt.Println("Dealer bust! You won.")
 		fmt.Println()
 	}
+}
+
+func (game *Game) checkIfGameOver(bet float64) float64 {
+	if game.status == "w" {
+		return bet
+	}
+
+	if game.status == "l" {
+		return -bet
+	}
+
+	if game.status == "t" {
+		return 0
+	}
+
+	return 1
 }
 
 func (game *Game) playerTurn() {
