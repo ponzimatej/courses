@@ -86,11 +86,6 @@ function end(direction) {
   console.log(`You got out of the maze in the ${direction}`);
 }
 
-const maze = [
-  "S---", 
-  "------", 
-  "####-", 
-  "-#---", 
-  "---F"];
-const directions = "SSEEEESSWS";
+const maze = ["-#---", "-S----", "####-", "-#---", "---F"];
+const directions = "WNSEEEEEWSSWWSWEE";
 canTraverseMaze(maze, directions);

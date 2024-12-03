@@ -87,6 +87,7 @@ type Game struct {
 	playerSum   int
 	dealerSum   int
 	status      string
+	bet         float64
 }
 
 func (game *Game) play(bet float64) float64 {
@@ -95,27 +96,28 @@ func (game *Game) play(bet float64) float64 {
 	game.dealerSum = 0
 	game.playerCards = []Card{}
 	game.dealerCards = []Card{}
+	game.bet = bet
 	fmt.Printf("\n----------------\n\n")
 
 	game.dealStartingCards()        // deal starting cards
 	game.updateSumsAndCheckStatus() // update the sums of players cards and check if game is over
-	if game.checkIfGameOver(bet) != 1 {
-		return game.checkIfGameOver(bet)
+	if game.checkIfGameOver(game.bet) != 1 {
+		return game.checkIfGameOver(game.bet)
 	}
 
 	game.playerTurn()
-	if game.checkIfGameOver(bet) != 1 {
-		return game.checkIfGameOver(bet)
+	if game.checkIfGameOver(game.bet) != 1 {
+		return game.checkIfGameOver(game.bet)
 	}
 
 	game.dealerTurn()
-	if game.checkIfGameOver(bet) != 1 {
-		return game.checkIfGameOver(bet)
+	if game.checkIfGameOver(game.bet) != 1 {
+		return game.checkIfGameOver(game.bet)
 	}
 
 	game.compare()
-	if game.checkIfGameOver(bet) != 1 {
-		return game.checkIfGameOver(bet)
+	if game.checkIfGameOver(game.bet) != 1 {
+		return game.checkIfGameOver(game.bet)
 	}
 
 	fmt.Println("Tie!")
@@ -216,18 +218,6 @@ func (game *Game) checkStatus() {
 		game.showCards(false, true)
 		fmt.Println()
 	}
-	if game.playerSum == 21 && game.dealerSum != 21 {
-		game.status = "w"
-		fmt.Println("Blackjack! You won.")
-		game.showCards(false, true)
-		fmt.Println()
-	}
-	if game.playerSum == 21 && game.dealerSum == 21 {
-		game.status = "t"
-		fmt.Println("Both player and Dealer hit a blackjack. Tie!")
-		game.showCards(false, true)
-		fmt.Println()
-	}
 	if game.dealerSum > 21 {
 		game.status = "w"
 		fmt.Println("Dealer bust! You won.")
@@ -254,7 +244,7 @@ func (game *Game) checkIfGameOver(bet float64) float64 {
 func (game *Game) playerTurn() {
 	i := true
 	for i == true {
-		fmt.Printf("Your turn, would you like to Hit or Stand? (H/S) ")
+		fmt.Printf("Your turn, would you like to Hit or Stand or Double Down? (H/S/D) ")
 		response := strings.ToLower(enterString())
 		switch response {
 		case "h", "hit":
@@ -264,10 +254,21 @@ func (game *Game) playerTurn() {
 			}
 		case "s", "stand":
 			return
+		case "d", "double down":
+			game.doubleDown()
+			game.hitPlayer()
+			if game.status == "l" || game.status == "w" {
+				return
+			}
+			return
 		default:
 			fmt.Println("Enter one of these options: (H/S)")
 		}
 	}
+}
+
+func (game *Game) doubleDown() {
+	game.bet = game.bet * 2
 }
 
 func (game *Game) hitPlayer() {
@@ -338,7 +339,6 @@ func main() {
 		}
 		if bet > balance || bet <= 0 {
 			fmt.Println("Invalid bet.")
-
 			continue
 		}
 
