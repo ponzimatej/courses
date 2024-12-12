@@ -1,0 +1,28 @@
+.main {
+    display: flex;
+    flex-direction: column;
+}
+
+.center {
+    justify-items: center;
+    align-items: center;
+}
+
+.rows {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.column {
+    flex: 1;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom:0;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+}
