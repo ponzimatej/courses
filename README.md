@@ -12,4 +12,6 @@ GoLang,
 Rust (basics),
 Data Structures,
 Time complexity,
-APIs
+APIs,
+Node,
+SQLite3,
