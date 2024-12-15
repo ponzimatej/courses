@@ -1,0 +1,12 @@
+const { exec } = require('child_process')
+
+X
+
+import { exec } from 'child_process'
+
+YOU CAN ONLY USE 'REQUIRE' OUTSIDE OF A MODULE
+YOU CAN ONLY USE 'IMPORT' INSIDE OF A MODULE
+
+TO BE IN A MODULE, GO TO 'package.json'
+add a new property:
+    "type": "module"

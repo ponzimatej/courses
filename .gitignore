@@ -1,6 +1,9 @@
 #Ignore macOS system files
 .DS_store
 
+#Ignore environment variables
+.env
+
 # Logs
 logs
 *.log

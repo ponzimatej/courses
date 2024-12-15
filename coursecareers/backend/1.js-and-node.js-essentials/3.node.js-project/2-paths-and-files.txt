@@ -1,0 +1,21 @@
+/SRC/ZIP.JS - WORKING WITH COMMANDS IN A PROGRAM
+
+'./2-paths-and-files.txt' refers to the same file as '2-path-and-files.txt'
+
+'path.resolve()' returns current path
+'path.resolve(<filePath>, 'dir') returns filePath/dir, 'path.resolve(<filePath>, '..') returns filePath/..
+'path.join(<path>, <file>)' joins path and file to one path
+'path.extname(<filePath>)' returns the file extension
+'path.firname(<filePath>)' returns path to a file
+'path.normalize(<filePath>)' returns path without relative components ('.', '..'): e.g. turns '/Users/matej/../matej/file' to '/Users/matej/file' 
+'fs.existsSync(<filePath>)' returns true or false depending if the filePath exists
+
+in /client created /files
+in /files created test1, test2, test3
+
+ZIP -- doesnt work on windows
+in /client in terminal write:
+'zip <new filePath> <what to zip> (/* means zip everything in the directory)
+'zip zipped/text.zip files/*' adds files test1, test2, test3 into text.zip file in /zipped
+
+in /src/zip.js created a function that executes the previous line in code

@@ -1,0 +1,12 @@
+values used for environment variables should not go into source code
+
+Easiest way to set an env variable is when running the source code,
+e.g. 'BROWSER=chrome npm run start open google' sets BROWSER=chrome and then runs.
+    To get the variable in the code, write: const browser = process.env.BROWSER; 
+
+You can also create a file '.env' in the root dir in this case: '/client'
+    You should put .env into .gitignore
+To read '.env' you need to 'npm install dotenv' and import dotenv from 'dotenv'
+
+if you have 'BROWSER=safari' in '.env' and then run the code with 'BROWSER=chrome npm run start open google',
+the env variable in the terminal will overwrite the one in '.env'

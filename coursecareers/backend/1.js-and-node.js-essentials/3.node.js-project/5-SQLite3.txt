@@ -1,0 +1,8 @@
+/SRC/db.js to see how to work with SQLite
+
+Unlike SQL, SQLite is embedded, which means its typically a file inside a software,
+shipped with the software
+
+to get sqlite, run: 'npm install better-sqlite3', then add:
+' import Database from "better-sqlite3" ' into your .js file
+

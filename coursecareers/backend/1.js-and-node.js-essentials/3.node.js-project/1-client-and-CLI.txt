@@ -1,0 +1,13 @@
+CLI = command line arguments
+
+in /client
+
+'npm init -y'
+    this created the package.json
+
+added src/
+added main.js into src/
+
+added script ' "start": "node src/main.js" ' into package.json
+
+typing 'npm run start' now runs 'client/src/main.js'
