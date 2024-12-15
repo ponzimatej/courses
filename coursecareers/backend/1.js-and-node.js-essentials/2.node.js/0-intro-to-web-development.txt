@@ -1,0 +1,15 @@
+-- what to know
+HTTP / HTTPS
+
+API
+REST API - methods: GET, DELETE, POST, PUT
+JSON
+DATABASES
+
+Node.js - JavaScript runtime environment, helps write js for backend
+
+MERN - MongoDB, Express, React, Node
+MongoDB - Databases,
+Express - APIs
+React - Frontend
+Node - Backend - work with file system, databases...

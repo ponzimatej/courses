@@ -311,14 +311,14 @@ func (game *Game) compare() {
 func enterString() string {
 	reader := bufio.NewReader(os.Stdin)
 	// ReadString will block until the delimiter is entered
-	input, err := reader.ReadString('\r')
+	input, err := reader.ReadString('\n')
 	if err != nil {
 		fmt.Println("An error occurred while reading input. Please try again", err)
 		return ""
 	}
 
 	// remove the delimiter from the string
-	input = strings.TrimSuffix(input, "\r")
+	input = strings.TrimSuffix(input, "\n")
 	return input
 }
 
@@ -341,7 +341,6 @@ func main() {
 			fmt.Println("Invalid bet.")
 			continue
 		}
-
 		balance += game.play(bet)
 	}
 

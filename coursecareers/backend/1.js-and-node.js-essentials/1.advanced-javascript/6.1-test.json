@@ -1,0 +1,17 @@
+{
+    "username": "matej",
+    "reputation": 90,
+    "birthday": "2024-12-12T10:49:22.691Z",
+    "address": {
+        "street": "Main Street",
+        "city": "New York",
+        "zip": "12345"
+    },
+    "hobbies": [
+        "sleeping",
+        "cooking",
+        "swimming"
+    ],
+    "verified": true,
+    "name": null
+}

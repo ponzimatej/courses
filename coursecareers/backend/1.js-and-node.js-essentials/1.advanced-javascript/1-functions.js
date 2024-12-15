@@ -16,7 +16,7 @@ const greet3 = (name) => {
 };
 greet3("matej");
 
-// ify - not used anymore
+// iife - not used anymore
 (function () {
   console.log("executed immediately");
 })();

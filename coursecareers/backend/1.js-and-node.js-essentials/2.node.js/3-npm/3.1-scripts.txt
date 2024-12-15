@@ -1,0 +1,6 @@
+npm run <name of script> runs the script
+the scripts are listed in package.json
+
+e.g. npm run test runs: "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+},

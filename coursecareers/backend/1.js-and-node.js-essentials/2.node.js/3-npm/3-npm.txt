@@ -1,0 +1,46 @@
+npm - node package manager
+The more dependencies, the more possible problems in your code
+You should have as few dependencies as possible
+You can install dependencies globally or just into one project
+
+npm install -g nodemon
+Installs nodemon globally, if you launch a node server with nodemon
+nodemon '<filename>.js', it automatically applies changes to your,
+so you dont have to restart.
+
+npm list -g
+Lists all your global packages.
+
+npm list -g --depth=<value>
+Lists all your global packages with their own packages.
+
+npm show <package name> version
+Shows latest version of the package.
+
+npm install <package name>@latest
+Installs the package at the latest version.
+
+npm init -y (within a folder)
+Creates a package.json inside a folder, in package.json, you can see all the local packages.
+Now if I do: 'npm install nodemon',
+it creates /node_modules inside my directory and adds nodemon into package.json.
+
+npm install --save-dev nodemon
+Installs the dependency as a development dependency,
+which means the dependency is used for development and not for production.
+
+npm list
+Shows all local dependencies
+
+*npm install*
+Installs all of the dependencies from package.json.
+You should run this whenever you clone into a repo etc.
+
+npm search <package>
+npm view <package you chose from search>
+
+or go to nmpjs.com and find any dependency you need.
+Be careful to not install any virus etc.
+
+npm rm <package>
+Removes a package

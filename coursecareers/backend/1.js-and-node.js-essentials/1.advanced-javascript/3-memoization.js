@@ -22,8 +22,7 @@ function sha256(data) {
   return sha256.cache[data];
 }
 
-console.log(sha256("hello1"));
-console.log(sha256("hello2"));
-console.log(sha256("hello3"));
-console.log(sha256("new"));
+console.log(sha256("123456ahoj"));
+console.log(sha256("1234ahoj"));
+console.log(sha256("123456ahoj"));
 console.log(sha256);
