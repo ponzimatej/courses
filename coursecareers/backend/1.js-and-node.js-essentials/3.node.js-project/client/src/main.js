@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import open, { apps } from "open";
 import dotenv from "dotenv"; // to read '.env'
 import Database from "better-sqlite3";
@@ -10,7 +11,8 @@ const command = args[0];
 const favorite = args[1];
 const url = args[2];
 
-const dbPath = "favorites.db";
+const dbPath =
+  "/Users/matejbednar/Desktop/coding/courses/coursecareers/backend/1.js-and-node.js-essentials/3.node.js-project/client/favorites.db";
 let db;
 
 if (!fs.existsSync(dbPath)) {

@@ -1,0 +1,13 @@
+in 'package.json' add '"bin": {"<name>": <filePath>}' => "bin": { "favs": "src/main.js" }
+
+in <dir> (in this example /client) run 'npm install -g'
+add '#!/usr/bin/env node' to the top of your file 
+
+in 'package.json' give your application a name => "name": "<name>"
+in 'package.json' add "files": <files> => "files": ["/src/main.js"]
+add a 'readme.md'
+
+go to npmjs.com
+run 'npm login' and login to your npmjs account
+run 'npm pack' to create package
+run 'npm publish' to publish
