@@ -1,0 +1,16 @@
+USE try {} catch {}
+
+400 status codes usually mean there's something wrong on the client side
+
+500 status codes usually mean there's something wrong with the server
+    basically means - 'website's broken, try again later'
+
+If you don't use try catch, the client is going to show the error itself
+    when in production, it will just say 'internal server error'
+
+to see how something looks in production, you can just add a script that launches with
+    NODE_ENV=production
+
+cross-env package helps run your code on multiple OS
+    there once was a package called crossenv that contained malware
+    be careful when installing packages

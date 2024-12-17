@@ -1,0 +1,16 @@
+created api dir
+
+in /api ran:
+    'npm init -y'
+    'npm install express'
+    'npm install nodemon --save-dev'
+
+'package.json'
+    changed: 
+        "main": "index.js" to "main": "src/app.js"
+        "main": <path> is the primary entry point to our file
+    added:
+        script "start": "nodemon src/app.js"
+        "type": "module into 'package.json
+
+
