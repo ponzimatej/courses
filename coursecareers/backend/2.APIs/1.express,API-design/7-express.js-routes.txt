@@ -1,0 +1,11 @@
+created a dir /routes
+in this directory created 'favorites.js'
+
+in 'favorites.js'
+I can use '/' instead of  '/favorites' for the API route.
+    Instead of using 'app = express()', in this file, I have to use 'router = express.Router()'.
+    Instead of using 'app.get()', in this file, I have to use 'router.get()'.
+Last thing I have to do is 'export default router' at the end of my file, to export the router to other files
+
+'router.use(() => {})' is only going to be used when we use the file directly, for example:
+    if we have 'router.use()' at the top of 'favorites.js', it is going to be called whenever we go use the 'favorites.js' file

@@ -1,0 +1,10 @@
+app.use((req, res, next) => {})
+
+to get to the next step, you have to call next() in the arrow function
+
+for example you can make two 'get' functions for the same route: e.g 'localhost:3000/favorites'
+    the first get function will take in (req, res, next) and at the end of this function, 
+    you will call next(), this will then call the next 'get' function which can do something more
+        e.g. the first function can process data and the second can return the data to the client
+
+You can also call one 'get' function and pass in (<path>, fn1, fn2)

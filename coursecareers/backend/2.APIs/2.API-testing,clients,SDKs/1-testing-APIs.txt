@@ -1,0 +1,4 @@
+1. in postman
+
+2. with REST client in VSCode
+    see in /backend/2.APIs/1./api/src/api.http

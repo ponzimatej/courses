@@ -1,0 +1,5 @@
+PUT
+client provides the entire object to replace the one in the database
+
+PATCH
+client only provides the attributes that they want to change

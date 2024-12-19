@@ -1,0 +1,24 @@
+@url=http://localhost:3000
+
+### retrieve favorites
+GET {{url}}/favorites
+
+### retrieve favorites ascending
+GET {{url}}/favorites?sort=asc
+
+### retrieve favorites descending
+GET {{url}}/favorites?sort=desc
+
+### create favorite
+# @name createFavorite
+POST {{url}}/favorites
+Content-Type: application/json
+
+{
+    "name": "matej",
+    "url": "matej.ahoj"
+}
+
+### retrieve new favorite
+@id = {{createFavorite.response.body.$.id}}
+GET {{url}}/favorites/{{id}}
