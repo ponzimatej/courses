@@ -211,7 +211,7 @@ func (game *Game) AddAceToDealerSum() {
 	}
 }
 
-func (game *Game) checkStatus() { 
+func (game *Game) checkStatus() {
 	if game.playerSum > 21 {
 		game.status = "l"
 		fmt.Println("Bust! You lost.")
