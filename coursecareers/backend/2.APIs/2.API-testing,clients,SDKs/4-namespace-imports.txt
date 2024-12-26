@@ -1,0 +1,19 @@
+you can either do 
+    import { x, y, z } from 'path'
+    or
+    import * as 'name' from 'path'
+        this way you can call 'name'.'functionName' and it will use the function from the other file
+
+you can also do
+    import { getFavorites as get } from 'path'
+
+when exporting, you can do
+    export default { getFavorites, addFavorite, deleteFavorite }
+        and import it with
+    import SDK (or some other name) from 'path'
+        then you can use the default exports such as getFavorites as SDK.getFavorites()
+       
+        you can also import from the file like this:
+            import SDK, {replaceFavorites} from 'path'
+        now you can access getFavorites, addFavorite and deleteFavorite as SDK.getFavorites and you can also access replaceFavorites()
+

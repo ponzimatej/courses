@@ -1,0 +1,22 @@
+typescript basically outputs javascript
+    its just js with additional features and rules
+
+typescript is recommended
+    it prevents dumb mistakes in your code
+
+'npm install -g typescript'
+'tsc' <= typescript compiler
+'tsc --version' etc.
+when you run 'tsc "fileName"' it will convert the .ts file to a .js file, you can then run the .js file with node
+
+created /api-ts for my API written in typescript
+    installed some dev dependencies => 'npm install typescript ts-node nodemon @types/node --save-dev'
+    dev dependencies because typescript is just used for development
+    'npx tsc --init' creates config.json which has to do with configuring our TS project
+
+TypeScript allows you to write modern JavaScript and then compile it to an old version of JavaScript
+    this is good because older versions might have better compatibility
+
+To make your JS code use 'import' you need to use ESModules
+    in tsconfig.json find 'modules' and set it to 'ESNext' or sth else idk
+    to be able to run the JS code with 'import', you need to go to package.json and add 'type': 'module'

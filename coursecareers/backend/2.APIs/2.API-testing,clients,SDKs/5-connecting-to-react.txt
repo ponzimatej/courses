@@ -1,0 +1,10 @@
+you need to set CORS to let the fronted access the backend (if they are not at the same url)
+
+CORS = Cross Origin Requests
+
+CORS can be bypassed by using CORS Middleware, so its not the best security, its just a small part
+
+DONT use online middleware, either make it yourself (node package cors anywhere) or just fix your CORS
+
+you can set the CORS origin to only be your frontend, this way the backend shouldnt (in theory) be accessible by anything else
+    you can also allow only chosen methods: e.g. GET and only chosen headers: e.g. 'content-type'

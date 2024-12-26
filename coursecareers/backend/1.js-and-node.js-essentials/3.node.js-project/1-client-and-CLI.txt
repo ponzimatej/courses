@@ -1,4 +1,4 @@
-CLI = command line arguments
+CLI = command line interface
 
 in /client
 
