@@ -1,5 +1,11 @@
 import express from "express";
 const app = express();
+const port = 3000;
 
-let x: number = 5;
-console.log(x);
+app.get("/", (req, res) => {
+  res.send("Hello world!");
+});
+
+app.listen(port, () => {
+  console.log(`http://localhost:${port}`);
+});

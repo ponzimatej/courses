@@ -1,0 +1,8 @@
+OUTDIR
+in tsconfig.json, add 'outDir'
+    outDir specifies an output folder for all compiled files
+I used 'outDir': 'dist'
+    in 'package.json' I updated main to 'dist/app.js'
+
+tsc --watch
+    compiles your ts file everytime you change it
